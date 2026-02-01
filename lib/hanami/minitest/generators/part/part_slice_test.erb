@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+require "test_helper"
+
+class <%= camelized_slice_name %>::Views::Parts::<%= camelized_name %>Test < Minitest::Test
+  def setup
+    @value = Object.new
+    @subject = <%= camelized_slice_name %>::Views::Parts::<%= camelized_name %>.new(value: @value)
+  end
+
+  def test_works
+    assert_kind_of <%= camelized_slice_name %>::Views::Parts::<%= camelized_name %>, @subject
+  end
+end

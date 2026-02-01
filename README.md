@@ -1,17 +1,178 @@
-<!--- This file is synced from hanakai-rb/repo-sync -->
+# Hanami::Minitest
 
-[rubygem]: https://rubygems.org/gems/hanami-minitest
-[actions]: https://github.com/hanami/hanami-minitest/actions
+Minitest and testing support for [Hanami applications](https://github.com/hanami/hanami).
 
-# hanami-minitest [![Gem Version](https://badge.fury.io/rb/hanami-minitest.svg)][rubygem] [![CI Status](https://github.com/hanami/hanami-minitest/workflows/CI/badge.svg)][actions]
+## Status
 
-## Links
+[![Gem Version](https://badge.fury.io/rb/hanami-minitest.svg)](https://badge.fury.io/rb/hanami-minitest)
+[![CI](https://github.com/hanami/hanami-minitest/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/hanami/hanami-minitest/actions?query=workflow%3Aci+branch%3Amain)
 
-- [User documentation](https://hanamirb.org)
-- [API documentation](http://rubydoc.info/gems/hanami-minitest)
+## Contact
 
+- Home page: http://hanamirb.org
+- Mailing List: http://hanamirb.org/mailing-list
+- Bugs/Issues: https://github.com/hanami/hanami-minitest/issues
+- Chat: http://chat.hanamirb.org
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+```ruby
+group :cli, :development, :test do
+  gem "hanami-minitest"
+end
+```
+
+And then execute:
+
+```
+$ bundle install
+$ bundle exec hanami setup
+```
+
+## Usage
+
+For detailed examples, see [EXAMPLES.md](EXAMPLES.md).
+
+When you run `hanami setup`, this gem will automatically:
+
+- Add test dependencies to your `Gemfile`
+- Create a `test/test_helper.rb` file
+- Set up support files in `test/support/`
+- Generate an initial request test
+
+### Writing Tests
+
+#### Action Tests
+
+Generate an action with its test:
+
+```
+$ bundle exec hanami generate action home.index --url=/
+```
+
+This creates both the action and a corresponding test file.
+
+#### Request Tests
+
+Request tests use Rack::Test to test your application's HTTP interface:
+
+```ruby
+require "test_helper"
+
+class RootTest < RequestTest
+  def test_successful_response
+    get "/"
+    assert_equal 200, last_response.status
+  end
+end
+```
+
+#### Feature Tests
+
+Feature tests use Capybara for browser-based integration testing:
+
+```ruby
+require "test_helper"
+
+class SignUpTest < FeatureTest
+  def test_visit_home_page
+    visit "/"
+    assert_text "Welcome to Hanami"
+  end
+end
+```
+
+#### Part Tests
+
+When generating a view part, a test is automatically created:
+
+```ruby
+require "test_helper"
+
+class MyApp::Views::Parts::UserTest < Minitest::Test
+  def setup
+    @value = Object.new
+    @subject = MyApp::Views::Parts::User.new(value: @value)
+  end
+
+  def test_works
+    assert_kind_of MyApp::Views::Parts::User, @subject
+  end
+end
+```
+
+### Database Cleaning
+
+If you're using `hanami-db`, database cleaning is automatically configured using `database_cleaner-sequel`. 
+
+Feature tests automatically get database cleaning. For other tests that need database access, simply include the `TestSupport::DB` module:
+
+```ruby
+require "test_helper"
+
+class MyDatabaseTest < Minitest::Test
+  include TestSupport::DB  # This test will get database cleaning
+  
+  def test_database_operation
+    # Database is cleaned before and after this test
+  end
+end
+```
+
+By default, tests use database transactions (fast). If you need truncation (e.g., for JavaScript-driven tests), define a `use_truncation?` method:
+
+```ruby
+class DynamicFormTest < FeatureTest
+  def use_truncation?
+    true  # Use truncation instead of transactions
+  end
+  
+  def test_with_javascript
+    # Uses truncation strategy
+  end
+end
+```
+
+### Operations Testing
+
+The gem includes support for testing operations that use `dry-monads`:
+
+```ruby
+require "test_helper"
+
+class MyOperationTest < Minitest::Test
+  def test_successful_operation
+    result = MyOperation.new.call(valid_params)
+    assert result.success?
+  end
+
+  def test_failed_operation
+    result = MyOperation.new.call(invalid_params)
+    assert result.failure?
+  end
+end
+```
+
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/hanami/hanami-minitest. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hanami/hanami-minitest/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 
-See `LICENSE` file.
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
+## Code of Conduct
+
+Everyone interacting in the `Hanami::Minitest` project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hanami/hanami-minitest/blob/main/CODE_OF_CONDUCT.md).
+
+## Copyright
+
+Copyright © 2014–2024 Hanami Team – Released under MIT License

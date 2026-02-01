@@ -1,0 +1,5 @@
+group :test do
+  # Web integration
+  gem "capybara"
+  gem "rack-test"
+end
