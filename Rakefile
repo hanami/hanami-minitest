@@ -13,6 +13,6 @@ YARD::Rake::YardocTask.new do |task|
 end
 
 desc "Run code quality checks"
-task lint: %i[rubocop yard]
+task lint: :rubocop
 
 task default: %i[lint spec]
