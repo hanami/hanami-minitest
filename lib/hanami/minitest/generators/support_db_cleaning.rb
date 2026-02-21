@@ -5,8 +5,17 @@ require "database_cleaner/sequel"
 module TestSupport
   module DB
     module Cleaning
-      def db_cleaning_with_truncation! = @db_cleaning_with_truncation = true
-      def js! = db_cleaning_with_truncation!
+      def self.included(base)
+        base.extend(ClassMethods)
+      end
+
+      module ClassMethods
+        def db_cleaning_with_truncation!
+          @db_cleaning_with_truncation = true
+        end
+
+        def js! = db_cleaning_with_truncation!
+      end
 
       def setup
         # Clean all databases before the first test
@@ -16,7 +25,7 @@ module TestSupport
           end
         end
 
-        use_truncation = defined?(@db_cleaning_with_truncation) && @db_cleaning_with_truncation
+        use_truncation = self.class.instance_variable_get(:@db_cleaning_with_truncation)
         strategy = use_truncation ? :truncation : :transaction
 
         Cleaning.all_databases.each do |db|
