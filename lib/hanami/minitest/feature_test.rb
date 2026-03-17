@@ -27,5 +27,3 @@ module Hanami
     end
   end
 end
-
-Capybara.app = Hanami.app
