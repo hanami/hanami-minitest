@@ -2,9 +2,7 @@
 
 require "dry/monads"
 
-module Minitest
-  class Test
-    # Provide `Success` and `Failure` for testing operation results.
-    include Dry::Monads[:result]
-  end
+class Hanami::Minitest::Test
+  # Provide `Success` and `Failure` for testing operation results.
+  include Dry::Monads[:result]
 end

@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class <%= camelized_app_name %>::Views::Parts::<%= camelized_name %>Test < Minitest::Test
+class <%= camelized_app_name %>::Views::Parts::<%= camelized_name %>Test < Hanami::Minitest::Test
   def setup
     @value = Object.new
     @subject = <%= camelized_app_name %>::Views::Parts::<%= camelized_name %>.new(value: @value)

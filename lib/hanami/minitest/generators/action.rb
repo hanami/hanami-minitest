@@ -46,7 +46,7 @@ module Hanami
 
             require "test_helper"
 
-            class #{class_name}Test < Minitest::Test
+            class #{class_name}Test < Hanami::Minitest::Test
               def test_works
                 params = {}
                 response = subject.call(params)

@@ -2,8 +2,6 @@
 
 require "minitest/autorun"
 
-module Minitest
-  class Test
-    # Add helper methods to be used by all tests here.
-  end
+class Hanami::Minitest::Test
+  # Add helper methods to be used by all tests here.
 end

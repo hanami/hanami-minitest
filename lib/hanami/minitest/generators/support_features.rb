@@ -1,16 +1,5 @@
 # frozen_string_literal: true
 
-require "capybara/minitest"
-
-class FeatureTest < Minitest::Test
-  include Capybara::DSL
-  include Capybara::Minitest::Assertions
-
-  def teardown
-    super
-    Capybara.reset_sessions!
-    Capybara.use_default_driver
-  end
+class Hanami::Minitest::FeatureTest
+  # Add custom feature test helpers here.
 end
-
-Capybara.app = Hanami.app
