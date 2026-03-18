@@ -1,0 +1,3 @@
+# Hanami Minitest support files intentionally use compact notation to re-open existing classes.
+Style/ClassAndModuleChildren:
+  Enabled: false

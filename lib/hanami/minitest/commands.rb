@@ -21,6 +21,7 @@ module Hanami
           copy_support_features
           copy_support_operations
           copy_support_requests
+          copy_support_rubocop
 
           generate_request_test
         end
@@ -89,6 +90,13 @@ module Hanami
           fs.cp(
             fs.expand_path(fs.join("generators", "support_requests.rb"), __dir__),
             fs.expand_path(fs.join("test", "support", "requests.rb"))
+          )
+        end
+
+        def copy_support_rubocop
+          fs.cp(
+            fs.expand_path(fs.join("generators", "support_rubocop.yml"), __dir__),
+            fs.expand_path(fs.join("test", "support", ".rubocop.yml"))
           )
         end
 

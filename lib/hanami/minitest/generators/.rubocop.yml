@@ -1,0 +1,7 @@
+# Our generated test/support/ files do not fully agree with our standard RuboCop rules. Provide an
+# override for this folder only.
+
+inherit_from: ../../../../.rubocop.yml
+
+Style/ClassAndModuleChildren:
+  Enabled: false
