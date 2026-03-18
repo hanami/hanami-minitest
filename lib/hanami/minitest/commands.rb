@@ -96,7 +96,7 @@ module Hanami
         def copy_support_rubocop
           fs.cp(
             fs.expand_path(fs.join("generators", "templates", "support_rubocop.yml"), __dir__),
-            fs.expand_path(fs.join("test", "support", ".rubocop.yml"))
+            fs.expand_path(fs.join("test", ".rubocop.yml"))
           )
         end
 
