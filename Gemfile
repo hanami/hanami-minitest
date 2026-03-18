@@ -6,6 +6,8 @@ eval_gemfile "Gemfile.devtools"
 
 gemspec
 
+gem "dry-cli", ">= 1.4"
+
 group :tools do
   gem "debug"
 end
