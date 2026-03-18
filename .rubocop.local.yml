@@ -1,0 +1,3 @@
+Style/ClassAndModuleChildren:
+  Exclude:
+    - "lib/hanami/minitest/generators/templates/**/*"
