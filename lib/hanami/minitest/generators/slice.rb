@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "erb"
+require "hanami/cli/ruby_file_generator"
 
 module Hanami
   module Minitest
@@ -18,31 +18,29 @@ module Hanami
         # @since 2.0.0
         # @api private
         def call(slice)
-          context = Struct.new(:slice, :camelized_slice_name).new(
-            slice,
-            inflector.camelize(slice)
+          camelized_slice_name = inflector.camelize(slice)
+
+          fs.write(
+            "test/slices/#{slice}/action_test.rb",
+            Hanami::CLI::RubyFileGenerator.class(
+              "ActionTest",
+              parent_class_name: "Hanami::Minitest::Test",
+              modules: [camelized_slice_name],
+              header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
+              body: [
+                "def test_pending",
+                "  skip \"Add tests for #{camelized_slice_name} actions\"",
+                "end"
+              ]
+            )
           )
 
-          fs.write("test/slices/#{slice}/action_test.rb", t("action_test.erb", context))
-
-          fs.write("test/slices/#{slice}/actions/.keep", t("keep.erb", context))
+          fs.write("test/slices/#{slice}/actions/.keep", "")
         end
 
         private
 
-        attr_reader :fs
-
-        attr_reader :inflector
-
-        def template(path, context)
-          require "erb"
-
-          ERB.new(
-            File.read(__dir__ + "/slice/#{path}")
-          ).result(context.instance_eval { binding })
-        end
-
-        alias_method :t, :template
+        attr_reader :fs, :inflector
       end
     end
   end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "hanami/cli/generators/app/ruby_class_file"
+require "hanami/cli/ruby_file_generator"
 
 module Hanami
   module Minitest
@@ -41,25 +42,24 @@ module Hanami
         end
 
         def test_content(class_name)
-          <<~RUBY
-            # frozen_string_literal: true
-
-            require "test_helper"
-
-            class #{class_name}Test < Hanami::Minitest::Test
-              def test_works
-                params = {}
-                response = subject.call(params)
-                assert_predicate response, :successful?
-              end
-
-              private
-
-              def subject
-                #{class_name}.new
-              end
-            end
-          RUBY
+          Hanami::CLI::RubyFileGenerator.class(
+            "#{class_name}Test",
+            header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
+            parent_class_name: "Hanami::Minitest::Test",
+            body: [
+              "def test_works",
+              "  params = {}",
+              "  response = subject.call(params)",
+              "  assert_predicate response, :successful?",
+              "end",
+              "",
+              "private",
+              "",
+              "def subject",
+              "  #{class_name}.new",
+              "end"
+            ]
+          )
         end
       end
     end

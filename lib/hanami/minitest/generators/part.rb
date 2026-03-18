@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "erb"
+require "hanami/cli/ruby_file_generator"
 
 module Hanami
   module Minitest
@@ -18,22 +18,15 @@ module Hanami
         # @since 2.1.0
         # @api private
         def call(app, slice, name)
-          context = Struct.new(
-            :camelized_app_name,
-            :camelized_slice_name,
-            :camelized_name,
-            :underscored_name
-          ).new(
-            inflector.camelize(app),
-            slice ? inflector.camelize(slice) : nil,
-            inflector.camelize(name),
-            inflector.underscore(name)
-          )
+          camelized_app_name = inflector.camelize(app)
+          camelized_slice_name = slice ? inflector.camelize(slice) : nil
+          camelized_name = inflector.camelize(name)
+          underscored_name = inflector.underscore(name)
 
           if slice
-            generate_for_slice(slice, context)
+            generate_for_slice(slice, camelized_app_name, camelized_slice_name, camelized_name, underscored_name)
           else
-            generate_for_app(context)
+            generate_for_app(camelized_app_name, camelized_name, underscored_name)
           end
         end
 
@@ -41,73 +34,88 @@ module Hanami
 
         # @since 2.1.0
         # @api private
-        def generate_for_slice(slice, context)
-          generate_base_part_for_app(context)
-          generate_base_part_for_slice(context, slice)
+        attr_reader :fs, :inflector
+
+        # @since 2.1.0
+        # @api private
+        def generate_for_slice(slice, camelized_app_name, camelized_slice_name, camelized_name, underscored_name)
+          generate_base_part_for_app(camelized_app_name)
+          generate_base_part_for_slice(slice, camelized_slice_name)
 
           fs.write(
-            "test/slices/#{slice}/views/parts/#{context.underscored_name}_test.rb",
-            t("part_slice_test.erb", context)
+            "test/slices/#{slice}/views/parts/#{underscored_name}_test.rb",
+            part_test_content(camelized_slice_name, camelized_name)
           )
         end
 
         # @since 2.1.0
         # @api private
-        def generate_for_app(context)
-          generate_base_part_for_app(context)
+        def generate_for_app(camelized_app_name, camelized_name, underscored_name)
+          generate_base_part_for_app(camelized_app_name)
 
           fs.write(
-            "test/views/parts/#{context.underscored_name}_test.rb",
-            t("part_test.erb", context)
+            "test/views/parts/#{underscored_name}_test.rb",
+            part_test_content(camelized_app_name, camelized_name)
           )
         end
 
         # @since 2.1.0
         # @api private
-        def generate_base_part_for_app(context)
+        def generate_base_part_for_app(camelized_app_name)
           path = fs.join("test", "views", "part_test.rb")
           return if fs.exist?(path)
 
-          fs.write(
-            path,
-            t("part_base_test.erb", context)
-          )
+          fs.write(path, base_part_test_content(camelized_app_name))
         end
 
         # @since 2.1.0
         # @api private
-        def generate_base_part_for_slice(context, slice)
+        def generate_base_part_for_slice(slice, camelized_slice_name)
           path = "test/slices/#{slice}/views/part_test.rb"
           return if fs.exist?(path)
 
-          fs.write(
-            path,
-            t("part_slice_base_test.erb", context)
+          fs.write(path, base_part_test_content(camelized_slice_name))
+        end
+
+        # @since 2.1.0
+        # @api private
+        def base_part_test_content(camelized_namespace)
+          Hanami::CLI::RubyFileGenerator.class(
+            "PartTest",
+            parent_class_name: "Hanami::Minitest::Test",
+            header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
+            body: [
+              "def setup",
+              "  @value = Object.new",
+              "  @subject = #{camelized_namespace}::Views::Part.new(value: @value)",
+              "end",
+              "",
+              "def test_works",
+              "  assert_kind_of #{camelized_namespace}::Views::Part, @subject",
+              "end"
+            ]
           )
         end
 
         # @since 2.1.0
         # @api private
-        attr_reader :fs
-
-        # @since 2.1.0
-        # @api private
-        attr_reader :inflector
-
-        # @since 2.1.0
-        # @api private
-        def template(path, context)
-          require "erb"
-
-          ERB.new(
-            File.read(__dir__ + "/part/#{path}"),
-            trim_mode: "-"
-          ).result(context.instance_eval { binding })
+        def part_test_content(camelized_namespace, camelized_name)
+          Hanami::CLI::RubyFileGenerator.class(
+            "#{camelized_name}Test",
+            parent_class_name: "Hanami::Minitest::Test",
+            header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
+            body: [
+              "def setup",
+              "  @value = Object.new",
+              "  @subject = #{camelized_namespace}::Views::Parts::#{camelized_name}.new(value: @value)",
+              "end",
+              "",
+              "def test_works",
+              "  assert_kind_of #{camelized_namespace}::Views::Parts::#{camelized_name}, @subject",
+              "end"
+            ]
+          )
         end
-
-        # @since 2.1.0
-        # @api private
-        alias_method :t, :template
       end
     end
   end
