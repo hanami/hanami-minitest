@@ -33,27 +33,27 @@ module Hanami
 
           fs.append(
             fs.expand_path("Gemfile"),
-            fs.read(fs.expand_path(fs.join("generators", gemfile_template), __dir__))
+            fs.read(fs.expand_path(fs.join("generators", "templates", gemfile_template), __dir__))
           )
         end
 
         def append_gitignore
           fs.append(
             fs.expand_path(".gitignore"),
-            fs.read(fs.expand_path(fs.join("generators", "gitignore"), __dir__))
+            fs.read(fs.expand_path(fs.join("generators", "templates", "gitignore"), __dir__))
           )
         end
 
         def copy_test_helper
           fs.cp(
-            fs.expand_path(fs.join("generators", "helper.rb"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "helper.rb"), __dir__),
             fs.expand_path(fs.join("test", "test_helper.rb"))
           )
         end
 
         def copy_support_minitest
           fs.cp(
-            fs.expand_path(fs.join("generators", "support_minitest.rb"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "support_minitest.rb"), __dir__),
             fs.expand_path(fs.join("test", "support", "minitest.rb"))
           )
         end
@@ -62,47 +62,47 @@ module Hanami
           return unless Hanami.bundled?("hanami-db")
 
           fs.cp(
-            fs.expand_path(fs.join("generators/support_db.rb"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "support_db.rb"), __dir__),
             fs.expand_path(fs.join("test", "support", "db.rb"))
           )
 
           fs.cp(
-            fs.expand_path(fs.join("generators/support_db_cleaning.rb"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "support_db_cleaning.rb"), __dir__),
             fs.expand_path(fs.join("test", "support", "db", "cleaning.rb"))
           )
         end
 
         def copy_support_features
           fs.cp(
-            fs.expand_path(fs.join("generators", "support_features.rb"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "support_features.rb"), __dir__),
             fs.expand_path(fs.join("test", "support", "features.rb"))
           )
         end
 
         def copy_support_operations
           fs.cp(
-            fs.expand_path(fs.join("generators", "support_operations.rb"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "support_operations.rb"), __dir__),
             fs.expand_path(fs.join("test", "support", "operations.rb"))
           )
         end
 
         def copy_support_requests
           fs.cp(
-            fs.expand_path(fs.join("generators", "support_requests.rb"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "support_requests.rb"), __dir__),
             fs.expand_path(fs.join("test", "support", "requests.rb"))
           )
         end
 
         def copy_support_rubocop
           fs.cp(
-            fs.expand_path(fs.join("generators", "support_rubocop.yml"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "support_rubocop.yml"), __dir__),
             fs.expand_path(fs.join("test", "support", ".rubocop.yml"))
           )
         end
 
         def generate_request_test
           fs.cp(
-            fs.expand_path(fs.join("generators", "request.rb"), __dir__),
+            fs.expand_path(fs.join("generators", "templates", "request.rb"), __dir__),
             fs.expand_path(fs.join("test", "requests", "root_test.rb"))
           )
         end
