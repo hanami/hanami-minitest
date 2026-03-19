@@ -85,12 +85,12 @@ module Hanami
             parent_class_name: "Hanami::Minitest::Test",
             header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
             body: [
-              "def setup",
+              "setup do",
               "  @value = Object.new",
               "  @subject = #{camelized_namespace}::Views::Part.new(value: @value)",
               "end",
               "",
-              "def test_works",
+              'test "works" do',
               "  assert_kind_of #{camelized_namespace}::Views::Part, @subject",
               "end"
             ]
@@ -105,12 +105,12 @@ module Hanami
             parent_class_name: "Hanami::Minitest::Test",
             header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
             body: [
-              "def setup",
+              "setup do",
               "  @value = Object.new",
               "  @subject = #{camelized_namespace}::Views::Parts::#{camelized_name}.new(value: @value)",
               "end",
               "",
-              "def test_works",
+              'test "works" do',
               "  assert_kind_of #{camelized_namespace}::Views::Parts::#{camelized_name}, @subject",
               "end"
             ]

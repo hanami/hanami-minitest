@@ -3,7 +3,7 @@
 require "test_helper"
 
 class RootTest < Hanami::Minitest::RequestTest
-  def test_not_found
+  test "not found" do
     get "/"
 
     # Generate new action via:

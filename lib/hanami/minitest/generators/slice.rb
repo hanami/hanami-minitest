@@ -28,7 +28,7 @@ module Hanami
               modules: [camelized_slice_name],
               header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
               body: [
-                "def test_pending",
+                "test \"pending\" do",
                 "  skip \"Add tests for #{camelized_slice_name} actions\"",
                 "end"
               ]

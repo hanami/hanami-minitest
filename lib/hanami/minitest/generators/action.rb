@@ -47,16 +47,10 @@ module Hanami
             header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
             parent_class_name: "Hanami::Minitest::Test",
             body: [
-              "def test_works",
+              "test \"works\" do",
               "  params = {}",
-              "  response = subject.call(params)",
+              "  response = #{class_name}.new.call(params)",
               "  assert_predicate response, :successful?",
-              "end",
-              "",
-              "private",
-              "",
-              "def subject",
-              "  #{class_name}.new",
               "end"
             ]
           )
