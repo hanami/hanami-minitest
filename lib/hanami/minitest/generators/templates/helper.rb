@@ -4,6 +4,7 @@ require "pathname"
 TEST_ROOT = Pathname(__dir__).realpath.freeze
 
 ENV["HANAMI_ENV"] ||= "test"
+require "hanami/minitest"
 require "hanami/prepare"
 
 require_relative "support/minitest"

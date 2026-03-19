@@ -11,7 +11,6 @@ module Hanami
   # @since 2.0.0
   # @api private
   module Minitest
-    # @since 2.0.0
     # @api private
     def self.gem_loader
       @gem_loader ||= Zeitwerk::Loader.new.tap do |loader|
@@ -21,17 +20,21 @@ module Hanami
         loader.push_dir(root)
         loader.ignore(
           "#{root}/hanami-minitest.rb",
-          "#{root}/hanami/minitest/{rake_tasks,version}.rb"
+          "#{root}/hanami/minitest/{rake_tasks,version}.rb",
+          "#{root}/hanami/minitest/generators/templates"
         )
-        loader.inflector.inflect("minitest" => "Minitest")
       end
     end
 
     gem_loader.setup
     require_relative "minitest/version"
-    require_relative "minitest/rake_tasks"
 
     if Hanami::CLI.within_hanami_app?
+      require_relative "minitest/commands"
+      require_relative "minitest/generators/action"
+      require_relative "minitest/generators/part"
+      require_relative "minitest/generators/slice"
+
       Hanami::CLI.before "install", Commands::Install
       Hanami::CLI.after "generate slice", Commands::Generate::Slice
 
