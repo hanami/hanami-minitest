@@ -1,3 +1,7 @@
+AllCops:
+  Exclude:
+    - "minitest_example/**/*"
+
 Style/ClassAndModuleChildren:
   Exclude:
     - "lib/hanami/minitest/generators/templates/**/*"
