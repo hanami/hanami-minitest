@@ -6,7 +6,9 @@ eval_gemfile "Gemfile.devtools"
 
 gemspec
 
-gem "dry-cli", ">= 1.4"
+gem "hanami-utils", github: "hanami/utils", branch: "main"
+gem "hanami-cli", github: "hanami/cli", branch: "main"
+gem "hanami", github: "hanami/hanami", branch: "main"
 
 group :tools do
   gem "debug"

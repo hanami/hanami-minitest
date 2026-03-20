@@ -28,7 +28,7 @@ module Hanami
         # @api public
         def test(desc = "anonymous", &block)
           block ||= proc { skip "(no tests defined)" }
-          name = :"test_#{desc.gsub(/\s+/, "_")}"
+          name = :"test_#{desc.gsub(/[^a-zA-Z0-9]+/, "_").gsub(/^_|_$/, "")}"
           raise "#{name} is already defined in #{self}" if method_defined?(name)
 
           define_method(name, &block)

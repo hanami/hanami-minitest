@@ -2,11 +2,16 @@
 
 require "bundler/setup"
 require "bundler/gem_tasks"
-require "rspec/core/rake_task"
+require "rake/testtask"
 require "rubocop/rake_task"
 require "yard"
 
-RSpec::Core::RakeTask.new { |task| task.verbose = false }
+Rake::TestTask.new(:test) do |t|
+  t.libs << "test"
+  t.libs << "lib"
+  t.test_files = FileList["test/**/*_test.rb"]
+end
+
 RuboCop::RakeTask.new
 YARD::Rake::YardocTask.new do |task|
   task.options = %w[--fail-on-warning --no-output]
@@ -15,4 +20,4 @@ end
 desc "Run code quality checks"
 task lint: :rubocop
 
-task default: %i[lint spec]
+task default: %i[lint test]
