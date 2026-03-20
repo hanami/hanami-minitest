@@ -1,7 +1,10 @@
-AllCops:
+# Minitest tests being regular Ruby classes will raise unwanted metrics offenses
+Metrics:
   Exclude:
-    - "minitest_example/**/*"
+    - "test/**/*"
 
+# We use the compact class definition for test files
 Style/ClassAndModuleChildren:
   Exclude:
     - "lib/hanami/minitest/generators/templates/**/*"
+    - "test/**/*"
