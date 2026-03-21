@@ -170,8 +170,6 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
         class Hanami::Minitest::FeatureTest
           # Add custom feature test helpers here.
         end
-
-        Capybara.app = Hanami.app
       EXPECTED
       assert_equal support_features, @fs.read("test/support/features.rb")
 

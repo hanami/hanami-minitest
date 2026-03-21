@@ -15,6 +15,8 @@ module Hanami
       include Capybara::DSL
       include Capybara::Minitest::Assertions
 
+      Capybara.app = Hanami.app
+
       # Resets Capybara sessions after each test.
       #
       # @since 2.0.0
