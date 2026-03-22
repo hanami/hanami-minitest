@@ -1,0 +1,61 @@
+# frozen_string_literal: true
+
+require "hanami/cli/generators/app/ruby_class_file"
+require "hanami/cli/ruby_file_generator"
+
+module Hanami
+  module Minitest
+    module Generators
+      # @since 2.0.0
+      # @api private
+      class Action
+        # @since 2.0.0
+        # @api private
+        def initialize(fs:, inflector:)
+          @fs = fs
+          @inflector = inflector
+        end
+
+        # @since 2.0.0
+        # @api private
+        def call(key:, namespace:, base_path:)
+          ruby_class_file = action_ruby_class_file(key: key, namespace: namespace, base_path: base_path)
+          test_file_path = ruby_class_file.path.gsub(/\.rb$/, "_test.rb")
+          action_class_name = ruby_class_file.fully_qualified_name
+
+          fs.write(test_file_path, test_content(action_class_name))
+        end
+
+        private
+
+        attr_reader :fs, :inflector
+
+        def action_ruby_class_file(key:, namespace:, base_path:)
+          Hanami::CLI::Generators::App::RubyClassFile.new(
+            fs: fs,
+            inflector: inflector,
+            namespace: namespace,
+            key: inflector.underscore(key),
+            base_path: base_path,
+            extra_namespace: "Actions"
+          )
+        end
+
+        def test_content(class_name)
+          Hanami::CLI::RubyFileGenerator.class(
+            "#{class_name}Test",
+            header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
+            parent_class_name: "Hanami::Minitest::Test",
+            body: [
+              "test \"works\" do",
+              "  params = {}",
+              "  response = #{class_name}.new.call(params)",
+              "  assert_predicate response, :successful?",
+              "end"
+            ]
+          )
+        end
+      end
+    end
+  end
+end

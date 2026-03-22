@@ -2,6 +2,10 @@
 
 module Hanami
   module Minitest
-    VERSION = "0.0.1"
+    # The current hanami-minitest version.
+    #
+    # @since 2.0.0
+    # @api public
+    VERSION = "2.3.1"
   end
 end
