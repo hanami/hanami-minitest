@@ -1,18 +1,14 @@
-# Hanami::Minitest
+<!--- This file is synced from hanakai-rb/repo-sync -->
 
-Minitest and testing support for [Hanami applications](https://github.com/hanami/hanami).
+[actions]: https://github.com/hanami/hanami-minitest/actions
+[chat]: https://discord.gg/naQApPAsZB
+[forum]: https://discourse.hanamirb.org
+[rubygem]: https://rubygems.org/gems/hanami-minitest
 
-## Status
+# hanami-minitest [![Gem Version](https://badge.fury.io/rb/hanami-minitest.svg)][rubygem] [![CI Status](https://github.com/hanami/hanami-minitest/workflows/CI/badge.svg)][actions]
 
-[![Gem Version](https://badge.fury.io/rb/hanami-minitest.svg)](https://badge.fury.io/rb/hanami-minitest)
-[![CI](https://github.com/hanami/hanami-minitest/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/hanami/hanami-minitest/actions?query=workflow%3Aci+branch%3Amain)
-
-## Contact
-
-- Home page: http://hanamirb.org
-- Mailing List: http://hanamirb.org/mailing-list
-- Bugs/Issues: https://github.com/hanami/hanami-minitest/issues
-- Chat: http://chat.hanamirb.org
+[![Forum](https://img.shields.io/badge/Forum-dc360f?logo=discourse&logoColor=white)][forum]
+[![Chat](https://img.shields.io/badge/Chat-717cf8?logo=discord&logoColor=white)][chat]
 
 ## Installation
 
@@ -175,14 +171,13 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/hanami/hanami-minitest. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/hanami/hanami-minitest/blob/main/CODE_OF_CONDUCT.md).
 
+## Links
+
+- [User documentation](https://hanamirb.org)
+- [API documentation](http://rubydoc.info/gems/hanami-minitest)
+
+
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+See `LICENSE` file.
 
-## Code of Conduct
-
-Everyone interacting in the `Hanami::Minitest` project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/hanami/hanami-minitest/blob/main/CODE_OF_CONDUCT.md).
-
-## Copyright
-
-Copyright © 2014–2024 Hanami Team – Released under MIT License
