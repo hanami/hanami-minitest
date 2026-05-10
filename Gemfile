@@ -11,7 +11,7 @@ gem "hanami-cli", github: "hanami/cli", branch: "main"
 gem "hanami", github: "hanami/hanami", branch: "main"
 
 group :tools do
-  gem "debug"
+  gem "debug", platform: :mri
 end
 
 group :docs do
