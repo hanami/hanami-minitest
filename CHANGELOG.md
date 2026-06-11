@@ -9,16 +9,6 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 
 ### Added
 
-- Initial release
-- Minitest setup as part of `hanami install`, and test file generation with `hanami generate slice`, `hanami generate action`, and `hanami generate part`
-- `RequestTest` base class for request tests using Rack::Test
-- `FeatureTest` base class for feature tests using Capybara
-- Database cleaning support via database_cleaner-sequel for tests that include `TestSupport::DB`
-- Operations testing support with Dry::Monads helpers
-- Rake tasks for running minitest
-- Test helper generation with proper Hanami app bootstrapping
-- Support files for minitest configuration, database handling, features, operations, and requests
-
 ### Changed
 
 ### Deprecated
@@ -29,4 +19,12 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 
 ### Security
 
-[Unreleased]: https://github.com/hanami/hanami-minitest
+[Unreleased]: https://github.com/hanami/hanami-minitest/compare/v3.0.0.rc1...HEAD
+
+## [3.0.0.rc1]
+
+### Added
+
+- Create the gem. (@timriley)
+
+[3.0.0.rc1]: https://github.com/hanami/hanami-minitest/releases/tag/v3.0.0.rc1
