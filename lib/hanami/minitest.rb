@@ -32,11 +32,17 @@ module Hanami
     if Hanami::CLI.within_hanami_app?
       require_relative "minitest/commands"
       require_relative "minitest/generators/action"
+      require_relative "minitest/generators/mailer"
+      require_relative "minitest/generators/operation"
       require_relative "minitest/generators/part"
       require_relative "minitest/generators/slice"
 
       Hanami::CLI.before "install", Commands::Install
       Hanami::CLI.after "generate slice", Commands::Generate::Slice
+
+      if Hanami.bundled?("dry-operation")
+        Hanami::CLI.after "generate operation", Commands::Generate::Operation
+      end
 
       if Hanami.bundled?("hanami-controller")
         Hanami::CLI.after "generate action", Commands::Generate::Action
@@ -44,6 +50,10 @@ module Hanami
 
       if Hanami.bundled?("hanami-view")
         Hanami::CLI.after "generate part", Commands::Generate::Part
+      end
+
+      if Hanami.bundled?("hanami-mailer")
+        Hanami::CLI.after "generate mailer", Commands::Generate::Mailer
       end
     end
   end
