@@ -15,6 +15,7 @@ module Hanami
           copy_support_db
           copy_support_features
           copy_support_operations
+          copy_support_mailers
           copy_support_requests
 
           generate_request_test
@@ -77,6 +78,15 @@ module Hanami
           fs.cp(
             fs.expand_path(fs.join("generators", "templates", "support_operations.rb"), __dir__),
             fs.expand_path(fs.join("test", "support", "operations.rb"))
+          )
+        end
+
+        def copy_support_mailers
+          return unless Hanami.bundled?("hanami-mailer")
+
+          fs.cp(
+            fs.expand_path(fs.join("generators", "templates", "support_mailers.rb"), __dir__),
+            fs.expand_path(fs.join("test", "support", "mailers.rb"))
           )
         end
 

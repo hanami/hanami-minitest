@@ -18,6 +18,8 @@ class Hanami::Minitest::Commands::Generate::MailerTest < ::Minitest::Test
         require "test_helper"
 
         class Bookshelf::Mailers::WelcomeTest < Hanami::Minitest::Test
+          include TestSupport::Mailers
+
           # Inspect the delivered message to assert on its contents:
           #
           # assert_equal ["recipient@example.com"], result.message.to

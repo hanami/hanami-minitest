@@ -15,7 +15,7 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
 
   def test_copies_all_test_support_files_with_hanami_db
     within_application_directory do
-      Hanami.stub(:bundled?, ->(gem) { gem == "hanami-db" }) do
+      Hanami.stub(:bundled?, ->(gem) { ["hanami-db", "hanami-mailer"].include?(gem) }) do
         @subject.call({})
       end
 
@@ -186,6 +186,36 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
       EXPECTED
       assert_equal support_operations, @fs.read("test/support/operations.rb")
 
+      # test/support/mailers.rb
+      support_mailers = <<~EXPECTED
+        # frozen_string_literal: true
+
+        # Reset recorded mail deliveries between tests.
+        #
+        # In the test env, mail is delivered via a shared test delivery method, so recorded
+        # deliveries accumulate across tests. Include this module in any test that sends mail
+        # to start with a clean slate:
+        #
+        #   class Mailers::WelcomeTest < Hanami::Minitest::Test
+        #     include TestSupport::Mailers
+        #     # ...
+        #   end
+        module TestSupport
+          module Mailers
+            def setup
+              Hanami.app.with_slices.each do |slice|
+                next unless slice.key?("mailers.delivery_method")
+
+                slice["mailers.delivery_method"].clear
+              end
+
+              super
+            end
+          end
+        end
+      EXPECTED
+      assert_equal support_mailers, @fs.read("test/support/mailers.rb")
+
       # test/support/requests.rb
       support_requests = <<~EXPECTED
         # frozen_string_literal: true
@@ -234,6 +264,7 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
 
       refute @fs.exist?("test/support/db.rb")
       refute @fs.exist?("test/support/db/cleaning.rb")
+      refute @fs.exist?("test/support/mailers.rb")
     end
   end
 

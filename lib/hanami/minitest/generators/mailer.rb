@@ -41,6 +41,8 @@ module Hanami
             header: ["# frozen_string_literal: true", "", 'require "test_helper"'],
             parent_class_name: "Hanami::Minitest::Test",
             body: <<~RUBY.lines(chomp: true)
+              include TestSupport::Mailers
+
               # Inspect the delivered message to assert on its contents:
               #
               # assert_equal ["recipient@example.com"], result.message.to
