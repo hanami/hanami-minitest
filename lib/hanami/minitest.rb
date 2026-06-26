@@ -44,7 +44,7 @@ module Hanami
         Hanami::CLI.after "generate operation", Commands::Generate::Operation
       end
 
-      if Hanami.bundled?("hanami-controller")
+      if Hanami.bundled?("hanami-action")
         Hanami::CLI.after "generate action", Commands::Generate::Action
       end
 
