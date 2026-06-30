@@ -146,15 +146,11 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
                 end
 
                 def all_databases
-                  @all_databases ||= begin
-                    slices = [Hanami.app] + Hanami.app.slices.with_nested
+                  @all_databases ||= Hanami.app.with_slices.each_with_object([]) { |slice, dbs|
+                    next unless slice.key?("db.rom")
 
-                    slices.each_with_object([]) { |slice, dbs|
-                      next unless slice.key?("db.rom")
-
-                      dbs.concat slice["db.rom"].gateways.values.map(&:connection)
-                    }.uniq
-                  end
+                    dbs.concat slice["db.rom"].gateways.values.map(&:connection)
+                  }.uniq
                 end
               end
             end
