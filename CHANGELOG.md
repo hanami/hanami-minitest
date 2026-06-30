@@ -19,7 +19,15 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 
 ### Security
 
-[Unreleased]: https://github.com/hanami/hanami-minitest/compare/v3.0.0.rc1...HEAD
+[Unreleased]: https://github.com/hanami/hanami-minitest/compare/v3.0.0...HEAD
+
+## [3.0.0] - 2026-06-30
+
+### Added
+
+- Create the gem. (@timriley)
+
+[3.0.0]: https://github.com/hanami/hanami-minitest/releases/tag/v3.0.0
 
 ## [3.0.0.rc1] - 2026-06-16
 
