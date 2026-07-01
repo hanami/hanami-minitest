@@ -12,5 +12,6 @@ gemspec:
     - rspec
     - yard
   runtime_dependencies:
+    - ["hanami-cli", "~> 3.0.0"]
     - [minitest, "~> 5.25"]
     - [zeitwerk, "~> 2.6"]
