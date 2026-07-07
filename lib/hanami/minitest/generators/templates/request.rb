@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class RootTest < Hanami::Minitest::RequestTest
+class RootTest < RequestTest
   test "not found" do
     get "/"
 
