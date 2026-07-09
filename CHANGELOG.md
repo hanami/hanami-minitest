@@ -17,6 +17,8 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 
 ### Fixed
 
+- Generate `FeatureTest` and `RequestTest` classes so feature and request tests work as expected without configuration. (@mddelk in #9, #10)
+
 ### Security
 
 [Unreleased]: https://github.com/hanami/hanami-minitest/compare/v3.0.0...HEAD

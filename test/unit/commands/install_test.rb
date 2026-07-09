@@ -216,7 +216,7 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
       support_requests = <<~EXPECTED
         # frozen_string_literal: true
 
-        class Hanami::Minitest::RequestTest
+        class RequestTest < Hanami::Minitest::RequestTest
           # Add custom request test helpers here.
         end
       EXPECTED
@@ -228,7 +228,7 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
 
         require "test_helper"
 
-        class RootTest < Hanami::Minitest::RequestTest
+        class RootTest < RequestTest
           test "not found" do
             get "/"
 
