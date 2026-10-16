@@ -93,7 +93,8 @@ class Hanami::Minitest::Commands::Generate::ActionTest < ::Minitest::Test
   private
 
   def within_application_directory(app: "Bookshelf")
-    dir = @fs.join(TMP, SecureRandom.uuid, app)
+    root = @fs.join(TMP, SecureRandom.uuid)
+    dir = @fs.join(root, app)
 
     @fs.mkdir(dir)
     @fs.chdir(dir) do
@@ -127,6 +128,6 @@ class Hanami::Minitest::Commands::Generate::ActionTest < ::Minitest::Test
       yield
     end
   ensure
-    @fs.delete_directory(dir)
+    @fs.delete_directory(root)
   end
 end

@@ -11,6 +11,8 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 
 ### Changed
 
+- Declare the `--skip-tests` option for each `hanami generate` command that hanami-minitest hooks into, using Dry CLI's `Registry#option`. hanami-minitest no longer depends on hanami-cli to declare this option. (@timriley in #12)
+
 ### Deprecated
 
 ### Removed
@@ -18,6 +20,7 @@ and this project adheres to [Break Versioning](https://www.taoensso.com/break-ve
 ### Fixed
 
 - Generate `FeatureTest` and `RequestTest` classes so feature and request tests work as expected without configuration. (@mddelk in #9, #10)
+- Use the app's inflector when generating tests for `hanami generate slice`, so the module name in the generated test respects the app's custom inflections (such as acronyms). (@timriley in #12)
 
 ### Security
 

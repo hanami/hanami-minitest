@@ -16,7 +16,7 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
   def test_copies_all_test_support_files_with_hanami_db
     within_application_directory do
       Hanami.stub(:bundled?, ->(gem) { ["hanami-db", "hanami-mailer"].include?(gem) }) do
-        @subject.call({})
+        @subject.call
       end
 
       # Gemfile
@@ -245,7 +245,7 @@ class Hanami::Minitest::Commands::InstallTest < ::Minitest::Test
   def test_does_not_add_db_gems_or_files_without_hanami_db
     within_application_directory do
       Hanami.stub(:bundled?, ->(_gem) { false }) do
-        @subject.call({})
+        @subject.call
       end
 
       # Gemfile should use the non-db variant
