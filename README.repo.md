@@ -17,8 +17,6 @@ $ bundle exec hanami setup
 
 ## Usage
 
-For detailed examples, see [EXAMPLES.md](EXAMPLES.md).
-
 When you run `hanami setup`, this gem will automatically:
 
 - Add test dependencies to your `Gemfile`
