@@ -12,14 +12,12 @@ And then execute:
 
 ```
 $ bundle install
-$ bundle exec hanami setup
+$ bundle exec hanami install
 ```
 
 ## Usage
 
-For detailed examples, see [EXAMPLES.md](EXAMPLES.md).
-
-When you run `hanami setup`, this gem will automatically:
+When you run `hanami install`, this gem will automatically:
 
 - Add test dependencies to your `Gemfile`
 - Create a `test/test_helper.rb` file
@@ -115,13 +113,11 @@ class MyDatabaseTest < Minitest::Test
 end
 ```
 
-By default, tests use database transactions (fast). If you need truncation (e.g., for JavaScript-driven tests), define a `use_truncation?` method:
+By default, tests use database transactions (fast). If you need truncation (e.g., for JavaScript-driven tests), call `db_cleaning_with_truncation!` (or its alias, `js!`) in your test class:
 
 ```ruby
 class DynamicFormTest < FeatureTest
-  def use_truncation?
-    true  # Use truncation instead of transactions
-  end
+  db_cleaning_with_truncation!  # Use truncation instead of transactions
   
   def test_with_javascript
     # Uses truncation strategy
