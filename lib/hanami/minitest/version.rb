@@ -5,6 +5,6 @@ module Hanami
     # The current hanami-minitest version.
     #
     # @api public
-    VERSION = "3.0.0"
+    VERSION = "3.1.0.rc1"
   end
 end
